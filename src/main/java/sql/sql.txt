@@ -1,0 +1,56 @@
+create table admin (
+
+id BIGINT PRIMARY KEY,
+login varchar,
+password varchar
+
+);
+
+create table client (
+
+id BIGINT PRIMARY KEY,
+name varchar,
+login varchar,
+password varchar,
+address varchar,
+phone bigint
+
+);
+
+Create table product(
+
+id BIGINT PRIMARY KEY,
+name varchar,
+amount integer,
+price FLOAT,
+
+);
+
+
+Create table "order"(
+
+id BIGINT PRIMARY KEY,
+number BIGINT,
+client_id BIGINT references client(id),
+product_id BIGINT references product(id)
+
+);
+
+
+
+Insert into admin values (
+
+1,'admin','admin'
+                        
+   );
+
+
+Insert into client
+values (1,
+        'Jamshit',
+        'muradow@mail.ru',
+        'root',
+        '�.�������, �.���������� 70/3, �.703�',
+        37525781
+        );
+
