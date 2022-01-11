@@ -1,12 +1,11 @@
 package domain;
 
-
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 public class Order {
-
+//transient
     private long id;
-    private int number;
     private transient Client client_id;
     private Commodity commodity_id;
 
@@ -17,9 +16,8 @@ public class Order {
         this.id = id;
     }
 
-    public Order(long id, int number, Client client_id, Commodity commodity_id) {
+    public Order(long id, Client client_id, Commodity commodity_id) {
         this.id = id;
-        this.number = number;
         this.client_id = client_id;
         this.commodity_id = commodity_id;
     }
@@ -30,14 +28,6 @@ public class Order {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     public Client getClient_id() {
@@ -61,21 +51,23 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return id == order.id && number == order.number && Objects.equals(client_id, order.client_id) && Objects.equals(commodity_id, order.commodity_id);
+        return id == order.id && Objects.equals(client_id, order.client_id) && Objects.equals(commodity_id, order.commodity_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, number, client_id, commodity_id);
+        return Objects.hash(id, client_id, commodity_id);
     }
 
     @Override
     public String toString() {
+
+     //   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return "Order{" +
                 "id=" + id +
-                ", number=" + number +
                 ", client_id=" + client_id +
                 ", commodity_id=" + commodity_id +
                 '}';
     }
+
 }

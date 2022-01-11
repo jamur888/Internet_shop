@@ -1,7 +1,7 @@
 package dao;
 
 import domain.Client;
-import utils.ConnectionUtil;
+import utils.db.ConnectionUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,28 +20,28 @@ public class ClientDao implements Dao<Client> {
 
     @Override
     public Client read(Long id) {
-        String query = "SELECT * FROM client WHERE id = ?";
-        Client client = null;
+        String query = "SELECT * FROM clients WHERE id = ?";
+        Client clients = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                client = retrieveDataFromDB(resultSet);
+                clients = retrieveDataFromDB(resultSet);
             }
         } catch (SQLException ex) {
             System.out.println("No such client with id " + id);
         }
-        return client;
+        return clients;
 
     }
 
-    public List<Client>  findByName(Client client) {
-        String name = client.getName();
+    public List<Client> findByName(Client clients) {
+        String name = clients.getName();
         Client clientDb = new Client();
-        List<Client> cll=new ArrayList<Client>();
-        String query = "SELECT * FROM client WHERE name = ?";
-            try (Connection connection = ConnectionUtil.getConnection()) {
+        List<Client> cll = new ArrayList<Client>();
+        String query = "SELECT * FROM clients WHERE name = ?";
+        try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
@@ -57,7 +57,7 @@ public class ClientDao implements Dao<Client> {
 
     @Override
     public List<Client> getAll() {
-        String query = "SELECT  id, name, isblocked, FROM client";
+        String query = "SELECT  * FROM clients";
         List<Client> clientList = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -72,50 +72,52 @@ public class ClientDao implements Dao<Client> {
     }
 
     @Override
-    public void create(Client client) {
-        String query = "INSERT INTO  client(name, isBlocked) VALUES (?, ?)";
+    public void create(Client clients) {
+        String query = "INSERT INTO  clients (name, isBlocked) VALUES (?,?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, client.getName());
-            statement.setBoolean(2, client.isBlocked());
+            statement.setString(1, clients.getName());
+            statement.setBoolean(2, clients.isBlocked());
             statement.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println("Client " + client.toString() + " was not created");
+            System.out.println("Client " + " was not created");
         }
 
     }
 
     @Override
-    public void update(Client client) {
-        String query = "UPDATE client SET name = ?, isblocked = ? WHERE id = ?";
+    public void update(Client clients) {
+        String query = "UPDATE clients SET name = ?, isblocked = ? WHERE id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, client.getName());
-            statement.setBoolean(2, client.isBlocked());
-            statement.setLong(3, client.getId());
+            statement.setString(1, clients.getName());
+            statement.setBoolean(2, clients.isBlocked());
+            statement.setLong(3, clients.getId());
             statement.executeUpdate();
         } catch (SQLException ex) {
-            //System.out.println("Not able to update " + client.toString());
+            System.out.println("Not able to update " + clients.toString());
             ex.printStackTrace();
         }
     }
 
     @Override
-    public void delete(Client client) {
-        String query = "DELETE from client WHERE id = ?";
+    public void delete(Client clients) {
+        String query = "DELETE from clients WHERE id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, client.getId());
+            statement.setLong(1, clients.getId());
             statement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Delete of client with id = "
-                    + client + "is failed");
+                    + clients + "is failed");
         }
     }
 
 
     private Client retrieveDataFromDB(ResultSet resultSet) throws SQLException {
+
         return new Client(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getBoolean("isBlocked"));
+
     }
 
 

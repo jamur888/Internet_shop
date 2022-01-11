@@ -1,4 +1,4 @@
-package utils;
+package utils.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +17,7 @@ public class ConnectionUtil {
     public static Connection getConnection() {
         Properties dbProperties = new Properties();
         dbProperties.put("user", "postgres");
-        dbProperties.put("password", "4145065");
+        dbProperties.put("password", "root");
         String url = "jdbc:postgresql://localhost:5432/onlinestore?serverTimezone=UTC";
 
         try {

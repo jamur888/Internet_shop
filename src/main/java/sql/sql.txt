@@ -1,56 +1,36 @@
-create table admin (
-
-id BIGINT PRIMARY KEY,
-login varchar,
-password varchar
-
-);
 
 create table client (
 
 id BIGINT PRIMARY KEY,
 name varchar,
-login varchar,
-password varchar,
-address varchar,
-phone bigint
+isBlocked boolean
 
 );
 
-Create table product(
+Create table commodity(
 
 id BIGINT PRIMARY KEY,
-name varchar,
-amount integer,
+art integer,
 price FLOAT,
+description varchar
 
 );
 
 
-Create table "order"(
+Create table "orders"(
 
 id BIGINT PRIMARY KEY,
 number BIGINT,
-client_id BIGINT references client(id),
-product_id BIGINT references product(id)
+client_id BIGINT references clients(id),
+commodity_id BIGINT references commodity(id)
 
 );
 
 
-
-Insert into admin values (
-
-1,'admin','admin'
-                        
-   );
-
-
 Insert into client
-values (1,
-        'Jamshit',
-        'muradow@mail.ru',
-        'root',
-        '�.�������, �.���������� 70/3, �.703�',
-        37525781
-        );
+values (1, 'Jamshit', false),(2, 'Egor', false),(3, 'Max', true);
 
+Insert into commodity
+values (1, 3490, 12.465, 'Nulla non elit amet incididunt adipisicing reprehenderit. Aliquip excepteur do aute culpa in sint nostrud fugiat duis do consequat duis. Esse ipsum magna occaecat eu excepteur aliqua.'),
+       (2, 2122, 19.788, 'Mollit eiusmod nostrud minim ad. Eu labore consequat culpa cillum excepteur. Excepteur nostrud proident sunt aute irure voluptate eu. Ipsum mollit occaecat ex ad ullamco ea Lorem irure id nulla ut laboris consequat duis. Nostrud magna magna id ut ex aliquip enim aliqua id veniam ad dolor eiusmod. Consequat enim officia Lorem eiusmod.'),
+       (3, 3714, 34.889,'Occaecat tempor aliquip ex proident sit adipisicing duis eiusmod voluptate cupidatat aliquip. Aliquip irure excepteur sit cupidatat ex commodo est ut tempor occaecat. Excepteur nisi proident elit eiusmod occaecat aute do reprehenderit aliqua. Tempor ea minim velit quis incididunt');

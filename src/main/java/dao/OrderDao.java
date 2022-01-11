@@ -3,7 +3,7 @@ package dao;
 import domain.Client;
 import domain.Commodity;
 import domain.Order;
-import utils.ConnectionUtil;
+import utils.db.ConnectionUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class OrderDao implements Dao<Order> {
     }
     @Override
     public Order read(Long id) {
-        String query= "SELECT * FROM orders INNER JOIN client ON orders.client_id = client.id INNER  JOIN commodity ON orders.commodity_id = commodity.id where id = ?";
+       String query= "SELECT * FROM orders INNER JOIN clients ON orders.client_id = clients.id INNER  JOIN commodity ON orders.commodity_id = commodity.id where orders.id = ?";
         Order orders = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -36,10 +36,25 @@ public class OrderDao implements Dao<Order> {
         }
         return orders;
     }
+    public List<Order> findAllOrdersByClient(Client clients){
+        String query= "SELECT * FROM orders where client_id = ?";
+        List<Order> orderList = new ArrayList<>();
+        try (Connection connection = ConnectionUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, clients.getId());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                orderList.add(read(resultSet.getLong("id")));
+            }
 
+        }catch (SQLException ex){
+            System.out.println("There are no orders in DB" + clients.getId());
+        }
+        return orderList;
+    }
     @Override
     public List<Order> getAll() {
-        String query= "SELECT id FROM orders";
+        String query= "SELECT * FROM orders";
 
         List<Order> orderList = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
@@ -57,12 +72,11 @@ public class OrderDao implements Dao<Order> {
 
     @Override
     public void create(Order orders) {
-        String query = "INSERT INTO orders(number, client_id, commodity_id) VALUES (?, ?, ?)";
+        String query = "INSERT INTO orders(client_id, commodity_id) VALUES (?, ?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, orders.getNumber());
-            statement.setLong(2, orders.getClient_id().getId());
-            statement.setLong(3, orders.getCommodity_id().getId());
+            statement.setLong(1, orders.getClient_id().getId());
+            statement.setLong(2, orders.getCommodity_id().getId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -77,13 +91,12 @@ public class OrderDao implements Dao<Order> {
 
     @Override
     public void update(Order orders) {
-        String query = "UPDATE order SET number = ?, client_id = ?, commodity_id = ? WHERE id = ? ";
+        String query = "UPDATE orders SET  client_id = ?, commodity_id = ? WHERE id = ? ";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, orders.getNumber());
-            statement.setLong(2, orders.getClient_id().getId());
-            statement.setLong(3, orders.getCommodity_id().getId());
-            statement.setLong(4, orders.getId());
+            statement.setLong(1, orders.getClient_id().getId());
+            statement.setLong(2, orders.getCommodity_id().getId());
+            statement.setLong(3, orders.getId());
             statement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Not able to update " + orders.toString());
@@ -104,7 +117,7 @@ public class OrderDao implements Dao<Order> {
     }
 
     private Order retrieveDataFromDB(ResultSet resultSet) throws SQLException {
-        return new Order(resultSet.getLong("id"), resultSet.getInt("number"),
+        return new Order(resultSet.getLong("id"),
                 new Client(resultSet.getLong("client_id"), resultSet.getString("name"), resultSet.getBoolean("isblocked")),
                 new Commodity(resultSet.getLong("commodity_id"),resultSet.getInt("art"), resultSet.getDouble("price"),resultSet.getString("description")));
 

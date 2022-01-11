@@ -9,8 +9,11 @@ public class Commodity {
     private double price;
     private String description;
 
+    public Commodity(){
+
+    }
     public Commodity(long id) {
-        this.id =id;
+        this.id = id;
     }
 
     public Commodity(long id, int art, double price, String description) {

@@ -8,19 +8,23 @@ public class Client {
     private long id;
     private String name;
     private boolean isBlocked;
-    private List<Order> orderList;
+    private List<Order> orders = new ArrayList<>();
 
-    public  Client(){}
+    public Client() {
+    }
 
-    public Client(long id){
-        this.id =id;
+    public Client(long id) {
+        this.id = id;
     }
 
     public Client(long id, String name, boolean isBlocked) {
         this.id = id;
         this.name = name;
         this.isBlocked = isBlocked;
+
     }
+
+
 
     public long getId() {
         return id;
@@ -38,20 +42,18 @@ public class Client {
         this.name = name;
     }
 
-    public boolean isBlocked() {
-        return isBlocked;
-    }
-
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
     }
 
-    public List<Order> getOrderList() {
-        return orderList;
+    public boolean isBlocked() { return isBlocked; }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
@@ -59,12 +61,12 @@ public class Client {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return id == client.id && isBlocked == client.isBlocked && Objects.equals(name, client.name) && Objects.equals(orderList, client.orderList);
+        return id == client.id && isBlocked == client.isBlocked && Objects.equals(name, client.name) && Objects.equals(orders, client.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, isBlocked, orderList);
+        return Objects.hash(id, name, isBlocked, orders);
     }
 
     @Override
@@ -73,7 +75,7 @@ public class Client {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", isBlocked=" + isBlocked +
-                ", orderList=" + orderList +
+                ", orders=" + orders +
                 '}';
     }
 }

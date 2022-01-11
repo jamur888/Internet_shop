@@ -1,7 +1,7 @@
 package dao;
 
 import domain.Commodity;
-import utils.ConnectionUtil;
+import utils.db.ConnectionUtil;
 
 import java.sql.*;
 import java.util.ArrayList;

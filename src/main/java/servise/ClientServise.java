@@ -2,64 +2,57 @@ package servise;
 
 import dao.ClientDao;
 import domain.Client;
+import domain.Commodity;
+import menu.Home;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class ClientServise {
-    private final ClientDao clientDao = ClientDao.getClientDao();
     private static ClientServise clientServise;
-
-    public ClientServise() throws SQLException {
-    }
 
     public static ClientServise getClientServise() {
         if (clientServise == null) {
-            try {
-                clientServise = new ClientServise();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
+            clientServise = new ClientServise();
         }
         return clientServise;
     }
 
-    public List<Client> findByName(Client client) {
-
-        return clientDao.findByName(client);
+    public List<Client> findByName(Client clients) throws SQLException {
+        return ClientDao.getClientDao().findByName(clients);
     }
 
-    // список всех клиентов
-
-    public List<Client> getAll() {
-        return clientDao.getAll();
+    public List<Client> getAll() throws SQLException {
+        return ClientDao.getClientDao().getAll();
     }
 
-    public void update(Client client) {
-        clientDao.update(client);
-    }
 
-    public void create(Client client) {
-        if (client.getId() > 0) {
-            clientDao.create(client);
-        } else System.out.println("bratan tagowa newozmojna");
-    }
-
-    public void delete(Client client) {
-        if (client.getId() > 0) {
-            clientDao.delete(client);
+    public void create(Client clients) throws SQLException {
+        if (clients != null) {
+            ClientDao.getClientDao().create(clients);
+        } else {
+            throw new IllegalArgumentException();
         }
-
     }
 
-    public void addToBlackList(Long id) {
-        Client client = clientDao.read(id);
+    public void delete(Client clients) throws SQLException {
+        if (clients.getId() > 0) ClientDao.getClientDao().delete(clients);
+    }
+
+    public void clientRegistration(Client client) throws SQLException {
+
+        if (client.getId() != 0) {
+            client.setId(client.getId() + 1);
+        } else {
+            client.setId(1);
+        }
+        ClientDao.getClientDao().create(client);
+    }
+
+    public void addToBlackList(Long id) throws SQLException {
+        Client client = ClientDao.getClientDao().read(id);
         client.setBlocked(true);
-        clientDao.update(client);
-        if (client.isBlocked() == true) {
-            System.out.println("вы в чёрном списке");
-        }
+        ClientDao.getClientDao().update(client);
     }
 
 

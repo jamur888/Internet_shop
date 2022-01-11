@@ -27,7 +27,8 @@ public class CommodityServise {
     }
 
     public List<Commodity> getAll() {
-        return commodityDao.getAll();
+        List<Commodity> arrayList = commodityDao.getAll();
+        return arrayList;
     }
 
     public void create(Commodity commodity) {
@@ -36,14 +37,14 @@ public class CommodityServise {
         } else {
             throw new IllegalArgumentException();
         }
-        commodityDao.create(commodity);
+
     }
 
     public void update(Commodity commodity) {
-
+        commodityDao.update(commodity);
     }
 
     public void delete(Commodity commodity) {
-
+        commodityDao.delete(commodity);
     }
 }

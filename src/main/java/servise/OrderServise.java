@@ -1,11 +1,11 @@
 package servise;
 
-import dao.CommodityDao;
 import dao.OrderDao;
 import domain.Client;
 import domain.Order;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class OrderServise {
     private final OrderDao orderDao = OrderDao.getOrderDao();
@@ -26,12 +26,23 @@ public class OrderServise {
         return orderServise;
     }
 
-    public Order read(Long id){
+    public List<Order> getAll() {
+        return orderDao.getAll();
+    }
+
+    public Order read(Long id) {
         return orderDao.read(id);
     }
 
-    public void create (Order orders){
+    public void create(Order orders) {
         orderDao.create(orders);
     }
 
+    public void update(Order orders) {
+        orderDao.update(orders);
+    }
+
+    public List<Order> findAllOrdersByClient(Client clients) {
+        return orderDao.findAllOrdersByClient(clients);
+    }
 }
