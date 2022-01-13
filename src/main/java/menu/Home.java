@@ -152,9 +152,9 @@ public class Home {
         }
         System.out.println("make an order:\n");
         Order or = new Order();
-        int chose = scanner.nextInt();
-        or.setCommodity_id(new Commodity(chose));
-        or.setClient_id(new Client(inputClient.getId()));
+        //int chose = scanner.nextInt();
+        //or.setCommodity_id(new Commodity(chose));
+        //or.setClient_id(new Client(inputClient.getId()));
         orderServise.create(or);
 
     }

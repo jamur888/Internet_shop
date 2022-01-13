@@ -30,9 +30,6 @@ public class OrderServise {
         return orderDao.getAll();
     }
 
-    public Order read(Long id) {
-        return orderDao.read(id);
-    }
 
     public void create(Order orders) {
         orderDao.create(orders);

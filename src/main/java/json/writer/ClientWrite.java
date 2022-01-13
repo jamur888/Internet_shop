@@ -14,7 +14,7 @@ public class ClientWrite implements JsonSerializer<Client> {
         JsonObject result = new JsonObject();
         result.addProperty("name", client.getName());
         result.addProperty("isBlocked", client.isBlocked());
-        result.add("orders", jsonSerializationContext.serialize(client.getOrders()));
+        result.addProperty("orders", (Number) client.getOrders());
         return result;
     }
 }

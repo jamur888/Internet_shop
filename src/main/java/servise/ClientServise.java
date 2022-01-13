@@ -44,7 +44,7 @@ public class ClientServise {
         if (client.getId() != 0) {
             client.setId(client.getId() + 1);
         } else {
-            client.setId(1);
+            client.setId(1l);
         }
         ClientDao.getClientDao().create(client);
     }

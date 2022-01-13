@@ -13,14 +13,14 @@ import java.util.Scanner;
 
 public class OrderCreation implements Menu {
     private final ClientServise clientServise = ClientServise.getClientServise();
+    private final CommodityServise commodityServise = CommodityServise.getCommodityServise();
     private final OrderServise orderServise = OrderServise.getOrderServise();
     private final Scanner scanner = new Scanner(System.in);
-    private int operationNumber;
     private static OrderCreation menu;
     Client inputClient = new Client();
     List<Client> clients = null;
 
-    public static OrderCreation getInstance() throws SQLException {
+    public static OrderCreation getInstance() {
         if (menu == null) {
             menu = new OrderCreation();
         }
@@ -29,7 +29,7 @@ public class OrderCreation implements Menu {
 
     @Override
     public void getMenu() throws SQLException {
-        boolean exit = false;
+        boolean exit;
         boolean clientValid = false;
         String user;
         System.out.println("Enter a name:");
@@ -45,21 +45,21 @@ public class OrderCreation implements Menu {
             exit = false;
             int choseClient;
             System.out.println("Loged in successfuly!\n" +
-                    "1.каталог товаров:\n" +
-                    "2.мои заказы:\n" +
-                    "3.выход:");
+                    "1.Catalog:\n" +
+                    "2.My orders:\n" +
+                    "3.Exit:");
             do {
                 choseClient = scanner.nextInt();
                 switch (choseClient) {
                     case 1:
                         if (inputClient.isBlocked() == true) {
-                            System.out.println("client blocked");
+                            System.out.println("\n" +
+                                    "you are blocked");
                         } else {
-                            List<Commodity> commodityList = (List<Commodity>) new CommodityServise().getAll();
-                            commodityList.stream().forEach(System.out::println);
+                            List<Commodity> commodityList = commodityServise.getAll();
+                            commodityList.forEach(System.out::println);
                             ordersClient();
                         }
-                        //  clientServise.blackList(inputClient.getId());
                         break;
                     case 2:
                         orderServise.findAllOrdersByClient(inputClient).stream().forEach(System.out::println);
@@ -80,11 +80,11 @@ public class OrderCreation implements Menu {
 
     public void ordersClient() throws SQLException {
         clients = clientServise.findByName(inputClient);
-        inputClient = clients.get(0);//ce
+        inputClient = clients.get(0);
         System.out.println("make an order:\n");
         Order or = new Order();
         int chose = scanner.nextInt();
-        or.setCommodity_id(new Commodity(chose));
+        or.setCommodity_id(new Commodity((long) chose));
         or.setClient_id(new Client(inputClient.getId()));
         System.out.println("1:yes\n" +
                 "2:no\n" +

@@ -38,7 +38,7 @@ public class ClientDao implements Dao<Client> {
 
     public List<Client> findByName(Client clients) {
         String name = clients.getName();
-        Client clientDb = new Client();
+      //  Client clientDb = new Client();
         List<Client> cll = new ArrayList<Client>();
         String query = "SELECT * FROM clients WHERE name = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {

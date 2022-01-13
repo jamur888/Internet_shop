@@ -1,19 +1,23 @@
 package menu;
 
+import json.ClientSerializer;
+import json.DeserializeClient;
+import json.OrdersSerializer;
 import utils.NumberValidUtil;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class AdminMenu implements Menu {
-    private static final String NO_OPERATION = "Такой операции нету. Повторите попытку";
-    private static final String EXIT = "Закрытие программы";
+    private static final String NO_OPERATION = "There is no such operation. Try again";
+    private static final String EXIT = "Closing the program";
     private static int operationNumber;
     private static NumberValidUtil integerInput = new NumberValidUtil();
-    private static final String MAIN_MENU = "Меню администратора:\n" +
-            "1. Новый заказ\n" +
-            "2. Регистрасия\n" +
-            "3. Список всех клиентов\n" +
-            "4. Список всех заказов\n" +
+    private static final String MAIN_MENU = "Admin Menu:\n" +
+            "1.New order\n" +
+            "2. Registration\n" +
+            "3. List of all clients\n" +
+            "4. List of all orders\n" +
             "5. Экспортировать(Сериализация) все заказы в JSON файл\n" +
             "6. Имортировать(Дисериализация) данные о заказах в бд\n" +
             "7. Выход";
@@ -52,10 +56,10 @@ public class AdminMenu implements Menu {
                     menu = ListOfAllOrders.getInstance();
                     break;
                 case 5:
-                    //    menu = DeserializeTours.getInstance();
+                    menu = DeserializeClient.getInstance();
                     break;
                 case 6:
-                    // menu = SerializeClientsToJsonMenu();
+                     menu = ClientSerializer.getInstance();
                     break;
                 case 7:
                     exit = true;
@@ -68,7 +72,11 @@ public class AdminMenu implements Menu {
                     break;
             }
             if (menu != null) {
-                menu.getMenu();
+                try {
+                    menu.getMenu();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
         } while (!exit);

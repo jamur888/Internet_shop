@@ -1,27 +1,26 @@
 package json;
 
+
 import com.google.gson.GsonBuilder;
-import domain.Order;
+import domain.Commodity;
 import menu.Menu;
-import servise.OrderServise;
+import servise.CommodityServise;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class SerializeOrders extends SerializeToJson implements Menu {
+public class CommoditySerializer extends SerializeToJson implements Menu {
     private final Scanner scanner = new Scanner(System.in);
+    private static CommoditySerializer instance;
 
-    private static SerializeOrders instance;
-
-    public static SerializeOrders getInstance() {
+    public static CommoditySerializer getInstance() {
         if (instance == null) {
-            instance = new SerializeOrders();
+            instance = new CommoditySerializer();
         }
         return instance;
     }
 
-    private SerializeOrders() {
-
+    private CommoditySerializer() {
     }
 
     @Override
@@ -29,8 +28,8 @@ public class SerializeOrders extends SerializeToJson implements Menu {
         System.out.println("Введите путь к файлу .json");
         String path = scanner.next();
         gson = new GsonBuilder().setPrettyPrinting().create();
-        String propName = "orders";
-        final List<Order> allOrders = OrderServise.getOrderServise().getAll();
-        serialize(allOrders, path);
+        propName = "commodity";
+        final List<Commodity> allCommodity = CommodityServise.getCommodityServise().getAll();
+        serialize(allCommodity, path);
     }
 }

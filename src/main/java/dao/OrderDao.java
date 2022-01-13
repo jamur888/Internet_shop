@@ -72,9 +72,10 @@ public class OrderDao implements Dao<Order> {
 
     @Override
     public void create(Order orders) {
-        String query = "INSERT INTO orders(client_id, commodity_id) VALUES (?, ?)";
+        String query = "INSERT INTO orders( client_id, commodity_id) VALUES ( ?, ?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+          // statement.setLong(1,orders.getId());
             statement.setLong(1, orders.getClient_id().getId());
             statement.setLong(2, orders.getCommodity_id().getId());
             statement.executeUpdate();
@@ -118,8 +119,8 @@ public class OrderDao implements Dao<Order> {
 
     private Order retrieveDataFromDB(ResultSet resultSet) throws SQLException {
         return new Order(resultSet.getLong("id"),
-                new Client(resultSet.getLong("client_id"), resultSet.getString("name"), resultSet.getBoolean("isblocked")),
-                new Commodity(resultSet.getLong("commodity_id"),resultSet.getInt("art"), resultSet.getDouble("price"),resultSet.getString("description")));
+                new Client(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getBoolean("isblocked")),
+                new Commodity(resultSet.getLong("id"),resultSet.getInt("art"), resultSet.getDouble("price"),resultSet.getString("description")));
 
     }
 

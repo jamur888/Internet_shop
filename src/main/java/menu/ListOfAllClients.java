@@ -1,12 +1,13 @@
 package menu;
 
 import domain.Client;
-import utils.NumberValidUtil;
 import servise.ClientServise;
+import utils.NumberValidUtil;
+
 import java.sql.SQLException;
 import java.util.List;
 
-public class ListOfAllClients implements Menu{
+public class ListOfAllClients implements Menu {
     private static int operationNumber;
     private static ListOfAllClients instance;
 
@@ -21,13 +22,12 @@ public class ListOfAllClients implements Menu{
     }
 
     @Override
-    public void getMenu() throws SQLException {
+    public void getMenu(){
         try {
             boolean exit = false;
             final List<Client> allClients = ClientServise.getClientServise().getAll();
-            if (allClients.size() > 0) {
-                allClients.forEach(System.out::println);
-            }
+            allClients.forEach(System.out::println);
+
             do {
                 operationNumber = NumberValidUtil.getOperationNumberUtil().intNumberValid(operationNumber);
                 if (operationNumber == 1) {

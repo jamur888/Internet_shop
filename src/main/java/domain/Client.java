@@ -1,37 +1,29 @@
 package domain;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.Expose;
+
 import java.util.List;
 import java.util.Objects;
 
-public class Client {
-    private long id;
+public class Client extends Entity {
+
     private String name;
     private boolean isBlocked;
-    private List<Order> orders = new ArrayList<>();
+    @Expose
+    private List<Order> orders;
 
     public Client() {
     }
 
-    public Client(long id) {
-        this.id = id;
-    }
-
-    public Client(long id, String name, boolean isBlocked) {
-        this.id = id;
+    public Client( long id, String name, boolean isBlocked) {
+    super(id);
         this.name = name;
         this.isBlocked = isBlocked;
 
     }
 
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public Client(Long id) {
+        super(id);
     }
 
     public String getName() {
@@ -52,27 +44,25 @@ public class Client {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Client client = (Client) o;
-        return id == client.id && isBlocked == client.isBlocked && Objects.equals(name, client.name) && Objects.equals(orders, client.orders);
+        return isBlocked == client.isBlocked && Objects.equals(name, client.name) && Objects.equals(orders, client.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, isBlocked, orders);
+        return Objects.hash( name, isBlocked, orders);
     }
 
     @Override
     public String toString() {
         return "Client{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
                 ", isBlocked=" + isBlocked +
                 ", orders=" + orders +

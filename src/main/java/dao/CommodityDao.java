@@ -67,7 +67,7 @@ public class CommodityDao implements Dao<Commodity> {
 
     }
 
-    @Override//nado proweryat
+    @Override
     public void update(Commodity commodity) {
         String query = "UPDATE commodity SET art = ?, price = ?, description = ?  WHERE id = ? ";
         try (Connection connection = ConnectionUtil.getConnection()) {
@@ -79,6 +79,7 @@ public class CommodityDao implements Dao<Commodity> {
             statement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Not able to update " + commodity.toString());
+            ex.printStackTrace();
         }
     }
 
@@ -97,6 +98,6 @@ public class CommodityDao implements Dao<Commodity> {
     }
 
     private Commodity retrieveDataFromDB(ResultSet resultSet) throws SQLException {
-        return new Commodity(resultSet.getLong("id"), resultSet.getInt("art"), resultSet.getDouble("price"), resultSet.getString("description"));
+        return new Commodity(resultSet.getLong("id"),resultSet.getInt("art"), resultSet.getDouble("price"), resultSet.getString("description"));
     }
 }
