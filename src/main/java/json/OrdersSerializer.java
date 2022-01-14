@@ -31,9 +31,10 @@ public class OrdersSerializer extends SerializeToJson implements Menu {
         System.out.println("Введите путь к файлу .json");
         String path = scanner.next();
         gson = new GsonBuilder()
+                .registerTypeAdapter(Client.class, new ClientWrite())
                 .registerTypeAdapter(Order.class, new OrderWriter())
                 .registerTypeAdapter(Commodity.class, new CommodityWriter())
-                .registerTypeAdapter(Client.class, new ClientWrite()).setPrettyPrinting().create();
+                .setPrettyPrinting().create();
         propName = "orders";
         final List<Order> allOrders = OrderServise.getOrderServise().getAll();
         serialize(allOrders, path);

@@ -2,22 +2,18 @@ package domain;
 
 import java.util.Objects;
 
-public class Commodity extends Entity{
+public class Commodity extends Entity {
 
-  //  private long id;
     private int art;
     private double price;
     private String description;
 
-    public Commodity(){
+    public Commodity() {
 
     }
-//    public Commodity(long id) {
-//        this.id = id;
-//    }
 
-    public Commodity( long id, int art, double price, String description) {
-      //  this.id = id;
+    public Commodity(long id, int art, double price, String description) {
+        //  this.id = id;
         super(id);
         this.art = art;
         this.price = price;
@@ -58,20 +54,20 @@ public class Commodity extends Entity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Commodity commodity = (Commodity) o;
-        return  art == commodity.art && Double.compare(commodity.price, price) == 0 && Objects.equals(description, commodity.description);
+        return art == commodity.art && Double.compare(commodity.price, price) == 0 && Objects.equals(description, commodity.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( art, price, description);
+        return Objects.hash(art, price, description);
     }
 
     @Override
     public String toString() {
         return "Commodity{" +
-                "id=" + getId()+
+                "id=" + getId() +
                 ", art=" + art +
-                ", price=" + price +
+                ", price=$" + price +
                 ", description='" + description + '\'' +
                 '}';
     }

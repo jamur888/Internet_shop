@@ -15,8 +15,8 @@ public class Client extends Entity {
     public Client() {
     }
 
-    public Client( long id, String name, boolean isBlocked) {
-    super(id);
+    public Client(long id, String name, boolean isBlocked) {
+        super(id);
         this.name = name;
         this.isBlocked = isBlocked;
 
@@ -38,12 +38,13 @@ public class Client extends Entity {
         isBlocked = blocked;
     }
 
-    public boolean isBlocked() { return isBlocked; }
+    public boolean isBlocked() {
+        return isBlocked;
+    }
 
     public List<Order> getOrders() {
         return orders;
     }
-
 
 
     @Override
@@ -56,7 +57,7 @@ public class Client extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash( name, isBlocked, orders);
+        return Objects.hash(name, isBlocked, orders);
     }
 
     @Override

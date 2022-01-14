@@ -4,14 +4,14 @@ import java.util.Objects;
 
 public class Order extends Entity {
 
-    private  Client client_id;
+    private Client client_id;
     private Commodity commodity_id;
 
     public Order() {
     }
 
     public Order(long id, Client client_id, Commodity commodity_id) {
-       super(id);
+        super(id);
         this.client_id = client_id;
         this.commodity_id = commodity_id;
     }
@@ -37,12 +37,12 @@ public class Order extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return  Objects.equals(client_id, order.client_id) && Objects.equals(commodity_id, order.commodity_id);
+        return Objects.equals(client_id, order.client_id) && Objects.equals(commodity_id, order.commodity_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( client_id, commodity_id);
+        return Objects.hash(client_id, commodity_id);
     }
 
     @Override

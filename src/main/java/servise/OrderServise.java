@@ -25,20 +25,21 @@ public class OrderServise {
         }
         return orderServise;
     }
-
+    /*
+     * Список всех заказов
+     * */
     public List<Order> getAll() {
         return orderDao.getAll();
     }
-
-
+    /*
+     * Создание нового заказа
+     * */
     public void create(Order orders) {
         orderDao.create(orders);
     }
-
-    public void update(Order orders) {
-        orderDao.update(orders);
-    }
-
+    /*
+     * Список всех заказов определеного клиента
+     * */
     public List<Order> findAllOrdersByClient(Client clients) {
         return orderDao.findAllOrdersByClient(clients);
     }

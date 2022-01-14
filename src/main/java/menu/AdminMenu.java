@@ -56,10 +56,10 @@ public class AdminMenu implements Menu {
                     menu = ListOfAllOrders.getInstance();
                     break;
                 case 5:
-                    menu = DeserializeClient.getInstance();
+                    menu = OrdersSerializer.getInstance();
                     break;
                 case 6:
-                     menu = ClientSerializer.getInstance();
+                     menu = DeserializeClient.getInstance();
                     break;
                 case 7:
                     exit = true;

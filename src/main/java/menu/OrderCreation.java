@@ -62,7 +62,7 @@ public class OrderCreation implements Menu {
                         }
                         break;
                     case 2:
-                        orderServise.findAllOrdersByClient(inputClient).stream().forEach(System.out::println);
+                        orderServise.findAllOrdersByClient(inputClient).forEach(System.out::println);
                         break;
                     case 3:
                         AdminMenu.getInstance().getMenu();

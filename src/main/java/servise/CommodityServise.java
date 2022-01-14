@@ -37,14 +37,5 @@ public class CommodityServise {
         } else {
             throw new IllegalArgumentException();
         }
-
-    }
-
-    public void update(Commodity commodity) {
-        commodityDao.update(commodity);
-    }
-
-    public void delete(Commodity commodity) {
-        commodityDao.delete(commodity);
     }
 }
